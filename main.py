@@ -27,7 +27,15 @@ def emit(text: str, outdir: str) -> str:
     return target
 
 
+def validate(text: str) -> None:
+    """Self-check the competition gate before writing anything out."""
+    if not 1 <= len(text) <= 280 or not text.strip() or "\n" in text:
+        print("gate check failed: entry must be 1-280 chars, one non-blank line", file=sys.stderr)
+        raise SystemExit(2)
+
+
 def main(argv: list[str]) -> int:
+    validate(JOKE)
     target = emit(JOKE, resolve_outdir())
     print(f"wrote {len(JOKE)} chars to {target}")
     return 0
